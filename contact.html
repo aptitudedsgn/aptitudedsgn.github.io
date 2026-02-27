@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aptitude Design - Contact</title>
+   <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <meta name="description" content="Portfolio of Andrew Urbanischi — Creative Developer & Digital Designer" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Flip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/DrawSVGPlugin.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+
+    /* Snap scroll for sections */
+    #smooth-content {
+      scroll-snap-type: y mandatory;
+    }
+    .snap-section {
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+    /* perspective for 3D flip chars */
+    .section-title, .hero-title {
+      perspective: 800px;
+    }
+  </style>
+</head>
+<body>
+
+
+
+<div class="animated-header" style="height:100vh;">
+  <div style="position:relative; z-index:2; color:white;">
+    
+  </div>
+</div>
+
+<script src="animated-header.js"></script>
+<script>
+new AnimatedHeader({
+  count: 3,
+  size: { min: 1200, max: 1500 },
+  speed: {
+    x: { min: 0.5, max: 0.8 },
+    y: { min: 0.5, max: 1 }
+  },
+  colors: {
+    background: "#0a0a0a",
+    particles: ["#0008ff", "#3b00ff"]
+  },
+  blending: "lighter",
+  opacity: { center: 0, edge: 1 }
+});
+</script>
+
+
+  <!-- =============================================
+       CUSTOM CURSOR
+       ============================================= -->
+  <div id="cursor-dot"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- =============================================
+       LOADING SCREEN
+       ============================================= -->
+  <div id="loader">
+    <div class="loader-half top"></div>
+    <div class="loader-half bottom"></div>
+    <div class="loader-content">
+      <div class="loader-logo">
+        <img src="aptitude-logo.svg" class="loading-aptitude">
+      </div>
+      <div class="loader-line"></div>
+      <div class="loader-sub">Creative Developer</div>
+    </div>
+  </div>
+
+
+
+
+
+  <!-- =============================================
+       NAVIGATION
+       ============================================= -->
+<!-- Navigation -->
+<!-- Navigation Bar -->
+<nav id="navbar" style="position:fixed;top:1.5rem;left:50%;transform:translateX(-50%);z-index:50;display:flex;gap:0.75rem;align-items:center;">
+  <!-- logo -->
+   <a href="index.html" class="nav-pill nav-about nav-aptitude">
+    <img src="aptitude-logo.svg" alt="Aptitude Logo" />
+   </a>
+    <!-- About -->
+    <a href="#about" class="nav-pill nav-about">ABOUT</a>
+
+    <!-- Projects Wrapper -->
+    <div class="nav-project-wrapper">
+        <!-- Projects Button -->
+        <div class="nav-pill nav-projects-btn">WORK</div>
+
+        <!-- Projects Links Container -->
+        <div class="nav-projects-container">
+            <!-- Animated blue pill -->
+            <div class="nav-projects-pill"></div>
+            <a href="project4.html" class="nav-project-link">JPD FASHION</a>
+            <a href="project5.html" class="nav-project-link">LA LUMIERE</a>
+            <a href="project1.html" class="nav-project-link">TUTTI FRUTTI</a>
+            <a href="project3.html" class="nav-project-link">W3VITALS</a>
+            <a href="project2.html" class="nav-project-link">HERODOTUS TRAVEL</a>
+
+
+
+        </div>
+    </div>
+
+    <!-- Contact -->
+    <a href="contact.html" class="nav-pill nav-contact">CONTACT</a>
+</nav>
+
+<style>
+/* ---------------- Nav Pills Base ---------------- */
+.nav-pill {
+    position: relative;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    background: rgba(200,200,200,0.15);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s ease;
+    height: 44px;
+}
+.nav-pill::before {
+    content:'';
+    position: absolute;
+    inset: 0;
+    background: rgba(59,130,246,0.9);
+    border-radius: 9999px;
+    opacity: 0;
+    transition: opacity 0.1s ease-in-out;
+    z-index: -1;
+}
+.nav-about:hover::before,
+.nav-contact:hover::before {
+    opacity: 1;
+}
+
+/* Logo styling */
+.nav-aptitude img {
+    height: 20px; /* match nav height */
+    width: auto;
+    display: block;
+}
+
+/* ---------------- Projects Wrapper ---------------- */
+.nav-project-wrapper {
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: 44px; /* same height as pills */
+}
+
+/* Projects container */
+.nav-projects-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    opacity: 0;
+    pointer-events: none;
+    overflow: hidden;
+    width: 0;
+    transition: opacity 0.1s ease, width 0.1s ease;
+    padding: 0; /* remove extra padding */
+    border-radius: 9999px;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    background: rgba(200,200,200,0.15);
+    border: 1px solid rgba(255,255,255,0.1);
+    height: 44px; /* match other pills */
+    white-space: nowrap; /* prevent wrapping */
+    position: relative;
+}
+
+
+/* Animated blue pill */
+.nav-projects-pill {
+    position: absolute;
+    background: rgba(59,130,246,0.9);
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 0;
+    width: 0;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+}
+
+/* Project links */
+.nav-project-link {
+    position: relative;
+    padding: 0.75rem 1.5rem; /* same as .nav-pill */
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px; /* same height as pills */
+    white-space: nowrap;
+    transition: all 0.3s ease;
+}
+</style>
+
+<script>
+const projectsWrapper = document.querySelector('.nav-project-wrapper');
+const projectsBtn = document.querySelector('.nav-projects-btn');
+const projectsContainer = document.querySelector('.nav-projects-container');
+const projectLinks = projectsContainer.querySelectorAll('.nav-project-link');
+const projectsPill = projectsContainer.querySelector('.nav-projects-pill');
+
+// Timeline to swap Projects button with links
+const tlProjects = gsap.timeline({ paused: true });
+tlProjects.to(projectsBtn, { opacity: 0, duration: 0.2, display: 'none' })
+          .to(projectsContainer, {
+              opacity: 1,
+              pointerEvents: 'auto',
+              width: () => {
+                  const totalWidth = Array.from(projectLinks).reduce((acc, link) => acc + link.offsetWidth + 8, 0);
+                  return totalWidth + 'px';
+              },
+              duration: 0.4,
+              ease: 'power2.out'
+          }, "<");
+
+// Hover on wrapper triggers Projects expansion
+let collapseTimeout;
+
+projectsWrapper.addEventListener('mouseenter', () => {
+    clearTimeout(collapseTimeout);
+    tlProjects.play();
+});
+projectsWrapper.addEventListener('mouseleave', scheduleCollapse);
+projectsContainer.addEventListener('mouseenter', () => clearTimeout(collapseTimeout));
+projectsContainer.addEventListener('mouseleave', scheduleCollapse);
+
+function scheduleCollapse() {
+    clearTimeout(collapseTimeout);
+    collapseTimeout = setTimeout(() => {
+        tlProjects.reverse();
+    }, 100); // small delay to prevent flicker
+}
+
+// Animated pill on link hover
+projectLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+        const rect = link.getBoundingClientRect();
+        const containerRect = projectsContainer.getBoundingClientRect();
+
+        gsap.to(projectsPill, {
+            opacity: 1,
+            width: rect.width,
+            x: rect.left - containerRect.left,
+            duration: 0.3,
+            ease: 'power2.out'
+        });
+    });
+    link.addEventListener('mouseleave', () => {
+        gsap.to(projectsPill, { opacity: 0, duration: 0.3, ease: 'power2.in' });
+    });
+});
+
+// Smooth scroll with your custom smoother
+document.querySelectorAll('#navbar a, .nav-project-link, .hero-cta').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const href = this.getAttribute('href');
+
+    // Skip external links
+    if (!href.startsWith('#')) return;
+
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    e.preventDefault(); // block default anchor scroll
+
+    // Dispatch event for your custom smoother
+    const y = target.offsetTop;
+    window.dispatchEvent(new CustomEvent('_smoothSetTarget', { detail: { y } }));
+  });
+});
+</script>
+
+
+<!-- Mobile Dropdown Menu -->
+<!-- Mobile Dropdown Menu -->
+<div class="mobile-nav">
+  <button class="nav-pill nav-aptitude mobile-toggle">
+    <img src="aptitude-logo.svg" alt="Aptitude Logo" />
+  </button>
+  <div class="mobile-menu">
+    <a href="#about" class="nav-pill">ABOUT</a>
+    <div class="mobile-project-wrapper">
+      <button class="nav-pill">WORK</button>
+      <div class="mobile-project-links">
+        <a href="project1.html" class="nav-pill">TUTTI FRUTTI</a>
+        <a href="project2.html" class="nav-pill">HERODOTUS TRAVEL</a>
+        <a href="project3.html" class="nav-pill">W3VITALS</a>
+        <a href="project4.html" class="nav-pill">JPD FASHION</a>
+        <a href="project5.html" class="nav-pill">LA LUMIERE</a>
+      </div>
+    </div>
+    <a href="contact.html" class="nav-pill">CONTACT</a>
+  </div>
+</div>
+
+<style>
+
+  /* Force mobile nav hidden on desktop */
+@media (min-width: 769px) {
+  .mobile-nav,
+  .mobile-nav-wrapper,
+  .mobile-reload-btn {
+    display: none !important;
+  }
+}
+
+/* Hide desktop nav on mobile */
+@media (max-width: 768px) {
+  #navbar {
+    display: none !important;
+  }
+  
+
+  .mobile-nav {
+    position: fixed;
+    top: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    width: 90vw;
+  }
+
+  /* Project sub-dropdown */
+  .mobile-project-links {
+    display: none;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+  }
+
+  /* Match pill styling */
+  .mobile-menu .nav-pill,
+  .mobile-project-links .nav-pill {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
+}
+</style>
+
+<script>
+const mobileToggle = document.querySelector('.mobile-toggle');
+const mobileMenu = document.querySelector('.mobile-menu');
+const mobileProjectBtn = document.querySelector('.mobile-project-wrapper > button');
+const mobileProjectLinks = document.querySelector('.mobile-project-links');
+
+// Toggle main mobile menu
+mobileToggle.addEventListener('click', () => {
+  mobileMenu.style.display = mobileMenu.style.display === 'flex' ? 'none' : 'flex';
+});
+
+// Toggle project links inside mobile menu
+mobileProjectBtn.addEventListener('click', () => {
+  mobileProjectLinks.style.display = mobileProjectLinks.style.display === 'flex' ? 'none' : 'flex';
+});
+</script>
+
+<!-- Reload Button -->
+<!-- Reload Button with Upward SVG -->
+<button class="nav-pill mobile-reload-btn">
+  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+    <!-- Inverted arrow -->
+    <path d="M8 13V3M3 8l5-5 5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</button>
+
+<style>
+.mobile-reload-btn {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 1000;
+  height: 44px;
+  width: 44px;
+  border-radius: 9999px;
+  background: rgba(200,200,200,0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+}
+.mobile-reload-btn svg {
+  display: block;
+  color: white; /* matches nav-pill */
+}
+</style>
+
+<script>
+const reloadBtn = document.querySelector('.mobile-reload-btn');
+reloadBtn.addEventListener('click', () => {
+  window.location.reload();
+});
+</script>
+
+
+  <!-- =============================================
+       SMOOTH SCROLL WRAPPER
+       ============================================= -->
+  <div id="smooth-wrapper">
+    <div id="smooth-content">
+
+      
+      <!-- ==========================================
+           CONTACT / FOOTER SECTION
+           ========================================== -->
+      <section id="contact" class="snap-section">
+
+        <div class="contact-main">
+          <!-- Left -->
+       <div class="contact-left">
+            <p class="section-label">Get In Touch</p>
+            <h2 class="section-title">Let's build something great.</h2>
+
+            <p class="contact-big-text">
+              Whether you have a project in mind, a collaboration opportunity, or just want to say hello — my inbox is always open.
+            </p>
+
+            <div class="contact-links">
+              <a href="mailto:aptitudedsgn@gmail.com" class="contact-link-item">
+                <span class="link-icon">
+                  <svg width="25" height="25" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 4h12v9H2z" stroke="rgba(255,255,255,0.5)" stroke-width="1.2" rx="1"/>
+                    <path d="M2 4l6 5.5L14 4" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+                  </svg>
+                </span>
+                
+              </a>
+              <a href="index.html" class="contact-link-item">
+                <span class="link-icon">
+                  <svg width="25" height="25" viewBox="0 0 16 16" fill="none">
+                    <path d="M8 2C4.686 2 2 4.686 2 8s2.686 6 6 6 6-2.686 6-6-2.686-6-6-6z" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+                    <path d="M2 8h12M8 2c-1.5 1.5-2 3.5-2 6s.5 4.5 2 6M8 2c1.5 1.5 2 3.5 2 6s-.5 4.5-2 6" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+                  </svg>
+                </span>
+               
+              </a>
+              <a href="https://www.linkedin.com/in/andrew-u-017899265" class="contact-link-item">
+                <span class="link-icon">
+                  <svg width="25" height="25" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 4.5A2.5 2.5 0 014.5 2h7A2.5 2.5 0 0114 4.5v7a2.5 2.5 0 01-2.5 2.5h-7A2.5 2.5 0 012 11.5v-7z" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+  <g fill="rgba(255,255,255,0.5)" transform="translate(3.35,3.1) scale(0.45)">
+    <path d="M2.5 18h3V6.9h-3V18zM4 2c-1 0-1.8.8-1.8 1.8S3 5.6 4 5.6s1.8-.8 1.8-1.8S5 2 4 2zm6.6 6.6V6.9h-3V18h3v-5.7c0-3.2 4.1-3.4 4.1 0V18h3v-6.8c0-5.4-5.7-5.2-7.1-2.6z"/>
+  </g>
+                  </svg>
+                </span>
+               
+              </a>
+              <a href="https://www.instagram.com/aptitude.dsgn" class="contact-link-item">
+                <span class="link-icon">
+                  <svg width="25" height="25" viewBox="0 0 16 16" fill="none">
+                    <path d="M2 4.5A2.5 2.5 0 014.5 2h7A2.5 2.5 0 0114 4.5v7a2.5 2.5 0 01-2.5 2.5h-7A2.5 2.5 0 012 11.5v-7z" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+                    <circle cx="8" cy="8" r="2.2" stroke="rgba(255,255,255,0.5)" stroke-width="1.2"/>
+                    <circle cx="11.5" cy="4.5" r="0.6" fill="rgba(255,255,255,0.5)"/>
+                  </svg>
+                </span>
+                
+              </a>
+            </div>
+          </div>
+
+          <!-- Right — Contact Card -->
+          <div class="contact-right">
+            <div class="contact-card">
+              <div class="contact-card-label">Direct Email</div>
+              <a href="mailto:aptitudedsgn@gmail.com" class="contact-email">aptitudedsgn@gmail.com</a>
+
+              <form class="contact-form" onsubmit="handleForm(event)">
+                <div class="form-field">
+                  <input type="text" placeholder="Your name" required />
+                </div>
+                <div class="form-field">
+                  <input type="email" placeholder="Your email" required />
+                </div>
+                <div class="form-field">
+                  <textarea rows="4" placeholder="Tell me about your project…"></textarea>
+                </div>
+                <button type="submit" class="form-submit">
+                  Send Message
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                    <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer bar -->
+<footer class="footer-bar">
+
+  <!-- Left column: Logo on top, old copy below -->
+  <div class="footer-left">
+    <div class="footer-logo" style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+      <img src="aptitude-logo.svg" alt="aptitude-logo" style="height: 30px; opacity: 0.3;">
+      <span style="font-weight: bold; color: rgba(255,255,255,0.2);">Aptitude Design Studio</span>
+    </div>
+    <p class="footer-copy">© 2026 Andrew Urbanischi. All rights reserved.</p>
+  </div>
+
+  <!-- Center column: New copy (on the same line as old copy) -->
+  <div class="footer-center" style="align-self: center;">
+    <p class="footer-copy" style="margin: 0;">Website built from scratch, all content made with ❤ by me.</p>
+  </div>
+
+  <!-- Right column: Navigation -->
+  <nav class="footer-nav">
+    <a href="#hero" class="footer-nav-link" data-scroll-to="#hero">Top</a>
+    <a href="#about" class="footer-nav-link" data-scroll-to="#about">About</a>
+    <a href="#projects" class="footer-nav-link" data-scroll-to="#projects">Projects</a>
+    <a href="#contact" class="footer-nav-link" data-scroll-to="#contact">Contact</a>
+  </nav>
+
+</footer>
+
+      </section>
+
+    </div><!-- /smooth-content -->
+  </div><!-- /smooth-wrapper -->
+
+  <!-- Scripts -->
+  <script src="app.js"></script>
+  <script>
+    /* -------------------------------------------------------
+       Inline helpers & form handler
+       ------------------------------------------------------- */
+    function handleForm(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      const orig = btn.innerHTML;
+      btn.innerHTML = 'Sent! ✓';
+      btn.style.background = '#059669';
+      setTimeout(() => {
+        btn.innerHTML = orig;
+        btn.style.background = '';
+        e.target.reset();
+      }, 3000);
+    }
+
+    /* -------------------------------------------------------
+       Extra: particle / floating orbs on hero
+
+    (function createOrbs() {
+      const hero = document.getElementById('hero');
+      if (!hero) return;
+      for (let i = 0; i < 6; i++) {
+        const orb = document.createElement('div');
+        orb.style.cssText = `
+          position:absolute;
+          border-radius:50%;
+          pointer-events:none;
+          z-index:1;
+          opacity:${0.03 + Math.random() * 0.06};
+          background:radial-gradient(circle, #3b82f6, transparent);
+          width:${200 + Math.random() * 400}px;
+          height:${200 + Math.random() * 400}px;
+          left:${Math.random() * 100}%;
+          top:${Math.random() * 100}%;
+          transform:translate(-50%,-50%);
+          animation: orbFloat ${10 + Math.random() * 15}s ease-in-out infinite alternate;
+          animation-delay: ${Math.random() * 5}s;
+        `;
+        hero.appendChild(orb);
+      }
+
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes orbFloat {
+          from { transform: translate(-50%,-50%) scale(1) rotate(0deg); }
+          to   { transform: translate(-50%,-50%) scale(1.3) rotate(15deg); }
+        }
+      `;
+      document.head.appendChild(style);
+    })();
+       ------------------------------------------------------- */
+
+    /* -------------------------------------------------------
+       Extra: Tilt effect on project cards
+       ------------------------------------------------------- */
+    document.querySelectorAll('.project-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) / (r.width / 2);
+        const dy = (e.clientY - cy) / (r.height / 2);
+        card.style.transform = `perspective(800px) rotateY(${dx * 4}deg) rotateX(${-dy * 4}deg) translateY(-4px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    /* -------------------------------------------------------
+       Extra: Nav active state on scroll
+       ------------------------------------------------------- */
+    (function() {
+      const sections = ['#hero', '#about', '#projects', '#contact'];
+      const navBtns  = document.querySelectorAll('.nav-btn');
+
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = '#' + entry.target.id;
+            navBtns.forEach(btn => {
+              const target = btn.dataset.scrollTo;
+              if (target === id) {
+                btn.style.borderColor = 'rgba(59,130,246,0.5)';
+                btn.style.color = '#fff';
+              } else {
+                btn.style.borderColor = '';
+                btn.style.color = '';
+              }
+            });
+          }
+        });
+      }, { threshold: 0.5 });
+
+      sections.forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) io.observe(el);
+      });
+    })();
+  </script>
+
+
+
+
+
+
+
+
+</body>
+</html>
