@@ -8,6 +8,12 @@ const _plugins = [ScrollTrigger, TextPlugin, Flip];
 if (typeof ScrollSmoother !== 'undefined') _plugins.push(ScrollSmoother);
 gsap.registerPlugin(..._plugins);
 
+
+
+/* ---------- Device detection ---------- */
+const IS_TOUCH = window.matchMedia('(pointer: coarse)').matches;
+
+
 /* ============================================================
    1. LOADING SCREEN
    ============================================================ */
@@ -38,6 +44,7 @@ function initLoader() {
    2. CUSTOM CURSOR
    ============================================================ */
 function initCursor() {
+    if (IS_TOUCH) return;
   const dot  = document.getElementById('cursor-dot');
   const ring = document.getElementById('cursor-ring');
 
@@ -74,6 +81,7 @@ function initCursor() {
    3. NAV BUTTON GLOW (cursor-following)
    ============================================================ */
 function initNavGlow() {
+    if (IS_TOUCH) return;
   document.querySelectorAll('.nav-btn').forEach(btn => {
     const glow = btn.querySelector('.btn-glow');
     if (!glow) return;
@@ -90,6 +98,9 @@ function initNavGlow() {
    4. PROJECT CARD GLOW (cursor-following)
    ============================================================ */
 function initCardGlow() {
+  
+  if (IS_TOUCH) return;
+
   document.querySelectorAll('.project-card').forEach(card => {
     const glow = card.querySelector('.card-glow');
     if (!glow) return;
