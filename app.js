@@ -386,6 +386,9 @@ function initSmoother() {
   const content = document.getElementById('smooth-content');
   const wrapper = document.getElementById('smooth-wrapper');
 
+const SCROLL_SPEED = IS_TOUCH ? 3 : 1.2; // 3x faster on mobile
+const TOUCH_SPEED  = IS_TOUCH ? 4 : 1.5;
+
   let currentY = 0;
   let targetY  = 0;
   let ease     = 0.1;
@@ -402,10 +405,10 @@ function initSmoother() {
   /* -----------------------------
      Wheel scrolling on wrapper only
   ----------------------------- */
-  wrapper.addEventListener('wheel', e => {
-    e.preventDefault(); // safe here, only affects wrapper
-    targetY = Math.max(0, Math.min(targetY + e.deltaY * 1.2, content.scrollHeight - window.innerHeight));
-  }, { passive: false });
+wrapper.addEventListener('wheel', e => {
+  e.preventDefault();
+  targetY = Math.max(0, Math.min(targetY + e.deltaY * SCROLL_SPEED, content.scrollHeight - window.innerHeight));
+}, { passive: false });
 
   /* -----------------------------
      Touch support
@@ -415,11 +418,11 @@ function initSmoother() {
     touchStartY = e.touches[0].clientY;
   }, { passive: true });
 
-  wrapper.addEventListener('touchmove', e => {
-    const dy = touchStartY - e.touches[0].clientY;
-    touchStartY = e.touches[0].clientY;
-    targetY = Math.max(0, Math.min(targetY + dy * 1.5, content.scrollHeight - window.innerHeight));
-  }, { passive: true });
+wrapper.addEventListener('touchmove', e => {
+  const dy = touchStartY - e.touches[0].clientY;
+  touchStartY = e.touches[0].clientY;
+  targetY = Math.max(0, Math.min(targetY + dy * TOUCH_SPEED, content.scrollHeight - window.innerHeight));
+}, { passive: true });
 
   /* -----------------------------
      Custom scroll event for nav links
@@ -501,6 +504,3 @@ window.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initLoader();
 });
-
-
-
