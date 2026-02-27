@@ -325,15 +325,18 @@ document.querySelectorAll('#navbar a, .nav-project-link, .hero-cta').forEach(anc
     <img src="aptitude-logo.svg" alt="Aptitude Logo" />
   </button>
   <div class="mobile-menu">
-    <a href="#about" class="nav-pill">ABOUT</a>
+    <a href="index.html#about" class="nav-pill">ABOUT</a>
     <div class="mobile-project-wrapper">
       <button class="nav-pill">WORK</button>
       <div class="mobile-project-links">
-        <a href="project1.html" class="nav-pill">TUTTI FRUTTI</a>
-        <a href="project2.html" class="nav-pill">HERODOTUS TRAVEL</a>
-        <a href="project3.html" class="nav-pill">W3VITALS</a>
         <a href="project4.html" class="nav-pill">JPD FASHION</a>
         <a href="project5.html" class="nav-pill">LA LUMIERE</a>
+        <a href="project1.html" class="nav-pill">TUTTI FRUTTI</a>
+        <a href="project3.html" class="nav-pill">W3VITALS</a>
+        <a href="project2.html" class="nav-pill">HERODOTUS TRAVEL</a>
+
+
+
       </div>
     </div>
     <a href="contact.html" class="nav-pill">CONTACT</a>
@@ -509,7 +512,7 @@ reloadBtn.addEventListener('click', () => {
 
         <div class="hero-content">
           <p class="hero-eyebrow">✦ Available for projects</p>
-          <h1 class="hero-title">Crafting Digital&nbsp;Experiences</h1>
+          <h1 class="hero-title">Crafting Digital&nbsp;<br>Experiences</h1>
           <p class="hero-sub">
             Creative developer blending design and code to build immersive, high-performance web experiences that leave a lasting impression.
           </p>
@@ -878,16 +881,21 @@ gsap.to(track, {
                 <div class="form-field">
                   <textarea rows="4" placeholder="Tell me about your project…"></textarea>
                 </div>
+
                 <button type="submit" class="form-submit">
                   Send Message
                   <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                     <path d="M1 7h12M7 1l6 6-6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                   </svg>
                 </button>
+
               </form>
+
             </div>
           </div>
         </div>
+
+
 
         <!-- Footer bar -->
 <footer class="footer-bar">
@@ -927,18 +935,42 @@ gsap.to(track, {
     /* -------------------------------------------------------
        Inline helpers & form handler
        ------------------------------------------------------- */
-    function handleForm(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      const orig = btn.innerHTML;
-      btn.innerHTML = 'Sent! ✓';
-      btn.style.background = '#059669';
-      setTimeout(() => {
-        btn.innerHTML = orig;
-        btn.style.background = '';
-        e.target.reset();
-      }, 3000);
-    }
+function handleForm(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const btn = form.querySelector('.form-submit');
+  const originalHTML = btn.innerHTML;
+
+  const name = form.querySelector('input[type="text"]').value.trim();
+  const email = form.querySelector('input[type="email"]').value.trim();
+  const message = form.querySelector('textarea').value.trim();
+
+  if (!name || !email || !message) return;
+
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\n\n${message}`
+  );
+
+  const gmailURL =
+    `https://mail.google.com/mail/?view=cm&fs=1` +
+    `&to=aptitudedsgn@gmail.com` +
+    `&su=New project inquiry` +
+    `&body=${body}`;
+
+  // Open Gmail compose in new tab
+  window.open(gmailURL, '_blank');
+
+  // Button feedback (your original UX)
+  btn.innerHTML = 'Opening Gmail…';
+  btn.style.background = '#2563eb';
+
+  setTimeout(() => {
+    btn.innerHTML = originalHTML;
+    btn.style.background = '';
+    form.reset();
+  }, 3000);
+}
 
     /* -------------------------------------------------------
        Extra: particle / floating orbs on hero
