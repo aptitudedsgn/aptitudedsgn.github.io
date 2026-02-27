@@ -325,15 +325,18 @@ document.querySelectorAll('#navbar a, .nav-project-link, .hero-cta').forEach(anc
     <img src="aptitude-logo.svg" alt="Aptitude Logo" />
   </button>
   <div class="mobile-menu">
-    <a href="#about" class="nav-pill">ABOUT</a>
+    <a href="index.html" class="nav-pill">HOME</a>
     <div class="mobile-project-wrapper">
       <button class="nav-pill">WORK</button>
       <div class="mobile-project-links">
-        <a href="project1.html" class="nav-pill">TUTTI FRUTTI</a>
-        <a href="project2.html" class="nav-pill">HERODOTUS TRAVEL</a>
-        <a href="project3.html" class="nav-pill">W3VITALS</a>
         <a href="project4.html" class="nav-pill">JPD FASHION</a>
         <a href="project5.html" class="nav-pill">LA LUMIERE</a>
+        <a href="project1.html" class="nav-pill">TUTTI FRUTTI</a>
+        <a href="project3.html" class="nav-pill">W3VITALS</a>
+        <a href="project2.html" class="nav-pill">HERODOTUS TRAVEL</a>
+
+
+
       </div>
     </div>
     <a href="contact.html" class="nav-pill">CONTACT</a>
@@ -776,18 +779,42 @@ The approach focused on seamless visual consistency and intuitive digital experi
     /* -------------------------------------------------------
        Inline helpers & form handler
        ------------------------------------------------------- */
-    function handleForm(e) {
-      e.preventDefault();
-      const btn = e.target.querySelector('.form-submit');
-      const orig = btn.innerHTML;
-      btn.innerHTML = 'Sent! ✓';
-      btn.style.background = '#059669';
-      setTimeout(() => {
-        btn.innerHTML = orig;
-        btn.style.background = '';
-        e.target.reset();
-      }, 3000);
-    }
+function handleForm(e) {
+  e.preventDefault();
+
+  const form = e.target;
+  const btn = form.querySelector('.form-submit');
+  const originalHTML = btn.innerHTML;
+
+  const name = form.querySelector('input[type="text"]').value.trim();
+  const email = form.querySelector('input[type="email"]').value.trim();
+  const message = form.querySelector('textarea').value.trim();
+
+  if (!name || !email || !message) return;
+
+  const body = encodeURIComponent(
+    `Name: ${name}\nEmail: ${email}\n\n${message}`
+  );
+
+  const gmailURL =
+    `https://mail.google.com/mail/?view=cm&fs=1` +
+    `&to=aptitudedsgn@gmail.com` +
+    `&su=New project inquiry` +
+    `&body=${body}`;
+
+  // Open Gmail compose in new tab
+  window.open(gmailURL, '_blank');
+
+  // Button feedback (your original UX)
+  btn.innerHTML = 'Opening Gmail…';
+  btn.style.background = '#2563eb';
+
+  setTimeout(() => {
+    btn.innerHTML = originalHTML;
+    btn.style.background = '';
+    form.reset();
+  }, 3000);
+}
 
     /* -------------------------------------------------------
        Extra: particle / floating orbs on hero
